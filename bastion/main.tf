@@ -11,7 +11,7 @@
  *
  *    module "bastion" {
  *      source            = "github.com/segmentio/stack/bastion"
- *      region            = "us-west-2"
+ *      region            = "us-east-1"
  *      security_groups   = "sg-1,sg-2"
  *      vpc_id            = "vpc-12"
  *      key_name          = "ssh-key"

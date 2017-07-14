@@ -18,6 +18,37 @@ variable "cidr" {
   description = "The cidr block to use for internal security groups"
 }
 
+resource "aws_security_group" "lambda" {
+  name = "${var.name}-lambda"
+  description = "Allows traffic from and to the lambda functions of ${var.name}"
+  vpc_id = "${var.vpc_id}"
+
+  // allows traffic from the SG itself
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    self = true
+  }
+
+  // allows all traffic out
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags {
+    Name        = "Lambda security group (${var.name})"
+    Environment = "${var.environment}"
+  }
+}
+
 resource "aws_security_group" "internal_elb" {
   name        = "${format("%s-%s-internal-elb", var.name, var.environment)}"
   vpc_id      = "${var.vpc_id}"
@@ -139,6 +170,10 @@ resource "aws_security_group" "internal_ssh" {
     Name        = "${format("%s internal ssh", var.name)}"
     Environment = "${var.environment}"
   }
+}
+
+output "lambda" {
+  value = "${aws_security_group.lambda.id}"
 }
 
 // External SSH allows ssh connections on port 22 from the world.

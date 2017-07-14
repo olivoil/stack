@@ -17,7 +17,7 @@ resource "aws_iam_role" "default_lambda_role" {
       "Action": "sts:AssumeRole",
       "Principal": {
         "Service": [
-          "lambda.amazonaws.com",
+          "lambda.amazonaws.com"
         ]
       },
       "Effect": "Allow"
@@ -64,7 +64,7 @@ resource "aws_iam_role_policy" "default_lambda_function_role_policy" {
         "dynamodb:GetRecords",
         "dynamodb:GetShardIterator",
         "dynamodb:ListStreams",
-        "dynamodb:ListTables	*",
+        "dynamodb:ListTables",
         "dynamodb:ListTagsOfResource",
         "dynamodb:PutItem",
         "dynamodb:Query",

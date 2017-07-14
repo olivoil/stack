@@ -9,6 +9,7 @@ resource "aws_api_gateway_method" "cors_resource_options" {
 }
 
 resource "aws_api_gateway_integration" "cors_resource_options_integration" {
+  depends_on = ["aws_api_gateway_method.cors_resource_options"]
   rest_api_id = "${var.rest_api_id}"
   resource_id = "${var.resource_id}"
   http_method = "${aws_api_gateway_method.cors_resource_options.http_method}"

@@ -135,7 +135,7 @@ resource "aws_rds_cluster" "main" {
   db_subnet_group_name      = "${aws_db_subnet_group.main.id}"
   port                      = "${var.port}"
   skip_final_snapshot       = "${var.skip_final_snapshot}"
-  final_snapshot_identifier = "${var.name}-finalsnapshot"
+  final_snapshot_identifier = "${var.name}-${var.environment}-finalsnapshot"
 }
 
 resource "aws_route53_record" "main" {

@@ -81,6 +81,21 @@ variable "skip_final_snapshot" {
   default     = true
 }
 
+variable "engine" {
+  description = "The name of the database engine to be used for this DB cluster (aurora, aurora-mysql, aurora-postgresql)"
+  default     = "aurora"
+}
+
+variable "engine_mode" {
+  description = "The database engine mode (provisioned, serverless)"
+  default     = "provisioned"
+}
+
+variable "engine_version" {
+  description = "The database engine version"
+  default     = ""
+}
+
 resource "aws_security_group" "main" {
   name        = "${var.name}-rds-cluster"
   description = "Allows traffic to rds from other security groups"
@@ -136,6 +151,9 @@ resource "aws_rds_cluster" "main" {
   port                      = "${var.port}"
   skip_final_snapshot       = "${var.skip_final_snapshot}"
   final_snapshot_identifier = "${var.name}-${var.environment}-finalsnapshot"
+  engine                    = "${var.engine}"
+  engine_mode               = "${var.engine_mode}"
+  engine_version            = "${var.engine_version}"
 }
 
 resource "aws_route53_record" "main" {

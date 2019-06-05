@@ -51,6 +51,16 @@ resource "aws_iam_role_policy" "default_lambda_function_role_policy" {
     },
     {
       "Action": [
+        "es:ESHttpGet",
+        "es:ESHttpPut",
+        "es:ESHttpPost",
+        "es:ESHttpDelete"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:es:*:*:*"
+    },
+    {
+      "Action": [
         "dynamodb:BatchGetItem",
         "dynamodb:BatchWriteItem",
         "dynamodb:DeleteItem",
